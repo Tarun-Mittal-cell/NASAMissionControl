@@ -4,7 +4,13 @@ import Clickable from "../components/Clickable";
 
 const Launch = props => {
   const selectorBody = useMemo(() => {
-    return props.planets?.map(planet => 
+    // Ensure planets is an array before using map()
+    if (!Array.isArray(props.planets)) {
+      console.error('planets prop is not an array');
+      return null;
+    }
+
+    return props.planets.map(planet => 
       <option value={planet.kepler_name} key={planet.kepler_name}>{planet.kepler_name}</option>
     );
   }, [props.planets]);
