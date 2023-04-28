@@ -21,10 +21,7 @@ function loadPlanetsData() {
       }))
       .on('data', async (data) => {
         if(isHabitablePlanet(data)) {
-          // insert + update = upsert
-          await planets.updateOne({
-            keplerName: data.kepler_name,
-          });
+          savePlant(data);
         }
       })
       .on('error', (err) => {
@@ -42,6 +39,20 @@ async function getAllPlanets() {
   return await planets.find({});
 }
 
+async function savePlant(planet) {
+  try {
+    await planets.updateOne({
+      keplerName: planet.kepler_name,
+    }, {
+      keplerName: planet.kepler_name,
+    }, {
+      upsert: true,
+    });
+  } catch(err) {
+    console.error(`Could not sa`)
+  }
+
+}
 
 module.exports = {
     loadPlanetsData,
