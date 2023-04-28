@@ -20,7 +20,7 @@ saveLaunch(launch);
 
 async function existsLaunchWithId(launchId) {
     return await launchesDatabase.findOne({
-        flightNumber: parseInt(launchId),
+        flightNumber: launchId,
     });
 }
 
@@ -74,13 +74,12 @@ async function scheduleNewLaunch(launch) {
 
 async function abortLaunchById(launchId) {
     const aborted = await launchesDatabase.updateOne({
-        flightNumber: parseInt(launchId),
-        upcoming: true,
+        flightNumber: launchId,
     }, {
         upcoming: false,
         success: false,
     });
-    return aborted.ok === 1 && aborted.nModified === 1;
+    return aborted.modifiedCount === 1;;
 }
 
 module.exports = {
