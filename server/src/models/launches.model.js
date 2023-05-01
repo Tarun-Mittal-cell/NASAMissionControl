@@ -12,10 +12,10 @@ const launch = {
     mission: 'Kepler Exploration X', // name
     rocket: 'Expire IS1',  // rocket.name
     launchDate: new Date('December 27, 2030'), // date_local
-    target: 'Kepler-442 b',
-    customers: ['ZTM','NASA'],
-    upcoming: true,
-    success: true,
+    target: 'Kepler-442 b', // not applicable
+    customers: ['ZTM','NASA'], // payload.customers for each payload
+    upcoming: true, // upcoming
+    success: true, // success
 };
 
 saveLaunch(launch);
@@ -24,7 +24,7 @@ const SPACEX_API_URL = 'https://api.spacexdata.com/v4/launches/query';
 
 async function loadLaunchesData() {
     console.log('Downloading launch data...');
-    await axios.post(SPACEX_API_URL, {
+    const response = await axios.post(SPACEX_API_URL, {
             query: {}, 
             options: {
                 populate: [
@@ -33,6 +33,12 @@ async function loadLaunchesData() {
                         select: {
                             name: 1
                         }   
+                    }, 
+                    {
+                        path: 'payloads',
+                        select: {
+                            'customers': 1
+                        }
                     }
                 ]
             }
