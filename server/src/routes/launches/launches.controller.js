@@ -2,7 +2,7 @@ const { getAllLaunches, scheduleNewLaunch, existsLaunchWithId, abortLaunchById, 
 
 
 async function httpGetAllLaunches(req, res) {
-    console.log(req.query);
+    const { page, limit } = req.query;
     return res.status(200).json(await getAllLaunches());
 }
 
