@@ -90,7 +90,7 @@ async function getLatestFlightNumber() {
     const latestLaunch = await launchesDatabase
         .findOne()
         .sort('-flightNumber');
-
+    
     if (!latestLaunch) {
         return DEFAULT_FLIGHT_NUMBER;
     }
@@ -124,7 +124,7 @@ async function scheduleNewLaunch(launch) {
     }
 
     const newFlightNumber = await getLatestFlightNumber() + 1;
-
+    
 
     const newLaunch = Object.assign(launch, {
         success: true,
